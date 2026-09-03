@@ -1,6 +1,6 @@
 //src/components/CategoryGrid.js
 import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 const categories = [
@@ -63,17 +63,20 @@ const styles = StyleSheet.create({
   gridContainer: {
     flexDirection: "row",
     flexWrap: "wrap",
-    justifyContent: "space-around",
+    justifyContent: "space-between",
     paddingVertical: 12,
-    paddingHorizontal: 12,
+    paddingHorizontal: '4%',
     alignSelf: 'center',
     width: '100%',
     maxWidth: 1100,
   },
   categoryItem: {
-    width: '30%',
+    flexBasis: '30%',
+    flexGrow: 0,
+    flexShrink: 0,
     maxWidth: 220,
-    minWidth: 100,
+    minWidth: 0,
+    aspectRatio: 0.78,
     alignItems: "center",
     backgroundColor: "#FFF",
     marginBottom: 18,
@@ -90,7 +93,8 @@ const styles = StyleSheet.create({
   },
   categoryImage: {
     width: "100%",
-    aspectRatio: 0.72,
+    flex: 1,
+    minHeight: 0,
     borderRadius: 5,
   },
   categoryText: {

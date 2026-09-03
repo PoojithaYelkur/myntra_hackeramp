@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Dimensions, Image, Animated } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, Image, Animated } from "react-native";
 import Swiper from "react-native-deck-swiper";
 import { FontAwesome } from "@expo/vector-icons";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer"; // Import the Footer component
+import useSwipeActions from "../hooks/useSwipeActions";
 import Nav2 from "../components/Nav2";
 import HollywoodHoriZontalScroll from "../components/HollywoodHorizontalScroll";
-
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
 
 const images = [
   require("../../assets/Hollywood/image1.png"),
@@ -20,31 +19,7 @@ const images = [
 ];
 
 const HollywoodScreen = () => {
-  const [liked, setLiked] = useState(new Animated.Value(0));
-  const [disliked, setDisliked] = useState(new Animated.Value(0));
-  const [wishlist, setWishlist] = useState(new Animated.Value(0));
-
-  const handleSwipe = (type) => {
-    if (type === "left") {
-      Animated.timing(disliked, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: true,
-      }).start(() => disliked.setValue(0));
-    } else if (type === "right") {
-      Animated.timing(liked, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: true,
-      }).start(() => liked.setValue(0));
-    } else if (type === "top") {
-      Animated.timing(wishlist, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: true,
-      }).start(() => wishlist.setValue(0));
-    }
-  };
+  const { liked, disliked, wishlist, lastAction, handleSwipe } = useSwipeActions(images);
 
   console.log("Rendering BollywoodScreen");
 
@@ -61,9 +36,9 @@ const HollywoodScreen = () => {
               <Image source={card} style={styles.image} />
             </View>
           )}
-          onSwipedLeft={() => handleSwipe("left")}
-          onSwipedRight={() => handleSwipe("right")}
-          onSwipedTop={() => handleSwipe("top")}
+          onSwipedLeft={(cardIndex) => handleSwipe("left", cardIndex)}
+          onSwipedRight={(cardIndex) => handleSwipe("right", cardIndex)}
+          onSwipedTop={(cardIndex) => handleSwipe("top", cardIndex)}
           cardIndex={0}
           backgroundColor={"#fff"}
           stackSize={3}
@@ -91,6 +66,7 @@ const HollywoodScreen = () => {
         >
           <FontAwesome name="heart" size={30} style={styles.icon} />
         </Animated.View>
+        {!!lastAction && <Text style={styles.actionLabel}>{lastAction}</Text>}
       </View>
       <Footer />
     </View>
@@ -100,6 +76,7 @@ const HollywoodScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    minHeight: 0,
     backgroundColor: "#fff",
   },
   caption: {
@@ -110,14 +87,17 @@ const styles = StyleSheet.create({
   },
   swiperContainer: {
     flex: 1,
+    minHeight: 0,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
-    marginLeft: 19,
   },
   card: {
-    width: screenWidth * 0.8,
-    height: screenHeight * 0.6,
+    width: "92%",
+    maxWidth: 420,
+    height: 520,
+    maxHeight: "72%",
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -133,6 +113,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     borderRadius: 10,
+    resizeMode: "contain",
   },
   iconContainer: {
     position: "absolute",

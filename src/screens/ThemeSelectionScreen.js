@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, SafeAreaView, Platform } from 'react-native';
 import NavBar from '../components/NavBar';
 import SearchBar from '../components/SearchBar';
 import ImageCarousel from '../components/ImageCarousel';
@@ -7,20 +7,25 @@ import CategoryGrid from '../components/CategoryGrid';
 import Footer from '../components/Footer';
 
 const ThemeSelectionScreen = () => {
+  const isWeb = Platform.OS === 'web';
+  const Content = isWeb ? View : ScrollView;
+
   return (
-    <SafeAreaView style={styles.container}>
+    <SafeAreaView style={[styles.container, isWeb && styles.webContainer]}>
       <NavBar />
-      <ScrollView 
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
+      <Content
+        style={isWeb ? styles.webContent : styles.scrollView}
+        contentContainerStyle={!isWeb ? styles.scrollContent : undefined}
+        showsVerticalScrollIndicator={!isWeb}
       >
-        <SearchBar />
-        <Text style={styles.caption}>Top Picks for You!</Text>
-        <ImageCarousel />
-        <Text style={styles.caption}>Explore trendy trek!</Text>
-        <CategoryGrid />
-        {/* Add more components or content here as needed */}
-      </ScrollView>
+        <View style={styles.content}>
+          <SearchBar />
+          <Text style={styles.caption}>Top Picks for You!</Text>
+          <ImageCarousel />
+          <Text style={styles.caption}>Explore trendy trek!</Text>
+          <CategoryGrid />
+        </View>
+      </Content>
       <Footer />
     </SafeAreaView>
   );
@@ -29,21 +34,36 @@ const ThemeSelectionScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    minHeight: 0,
     backgroundColor: '#FFF',
   },
+  webContainer: {
+    height: 'auto',
+    overflow: 'visible',
+  },
   scrollContent: {
-    flexGrow: 1,
-    paddingBottom: 20, // Add some padding at the bottom
+    paddingBottom: 20,
+  },
+  scrollView: {
+    flex: 1,
+    minHeight: 0,
+  },
+  webContent: {
+    width: '100%',
+  },
+  content: {
+    width: '100%',
+    alignItems: 'stretch',
   },
   caption: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: 18,
+    marginVertical: 12,
     backgroundColor: 'rgba(255, 192, 203, 0.3)',
     padding: 10,
     borderRadius: 8,
-    width: '90%', // Take up most of the width
+    width: '92%',
     maxWidth: 900,
     alignSelf: 'center', // Center the caption
   },

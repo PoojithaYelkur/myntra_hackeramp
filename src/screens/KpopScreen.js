@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Dimensions, Image, Animated } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet, Image, Animated } from "react-native";
 import Swiper from "react-native-deck-swiper";
 import { FontAwesome } from "@expo/vector-icons";
 import NavBar from "../components/NavBar";
 import Footer from "../components/Footer"; // Import the Footer component
 import Nav2 from "../components/Nav2";
 import KpopHoriZontalScroll from "../components/KpopHorizontalScroll";
-const { width: screenWidth, height: screenHeight } = Dimensions.get("window");
-
+import useSwipeActions from "../hooks/useSwipeActions";
 const images = [
   require("../../assets/k-pop/kpop2.png"),
   require("../../assets/k-pop/kpop3.png"),
@@ -18,31 +17,7 @@ const images = [
 ];
 
 const KpopScreen = () => {
-  const [liked, setLiked] = useState(new Animated.Value(0));
-  const [disliked, setDisliked] = useState(new Animated.Value(0));
-  const [wishlist, setWishlist] = useState(new Animated.Value(0));
-
-  const handleSwipe = (type) => {
-    if (type === "left") {
-      Animated.timing(disliked, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: true,
-      }).start(() => disliked.setValue(0));
-    } else if (type === "right") {
-      Animated.timing(liked, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: true,
-      }).start(() => liked.setValue(0));
-    } else if (type === "top") {
-      Animated.timing(wishlist, {
-        toValue: 1,
-        duration: 500,
-        useNativeDriver: true,
-      }).start(() => wishlist.setValue(0));
-    }
-  };
+  const { liked, disliked, wishlist, lastAction, handleSwipe } = useSwipeActions(images);
 
   console.log("Rendering BollywoodScreen");
 
@@ -59,13 +34,14 @@ const KpopScreen = () => {
               <Image source={card} style={styles.image} />
             </View>
           )}
-          onSwipedLeft={() => handleSwipe("left")}
-          onSwipedRight={() => handleSwipe("right")}
-          onSwipedTop={() => handleSwipe("top")}
+          onSwipedLeft={(cardIndex) => handleSwipe("left", cardIndex)}
+          onSwipedRight={(cardIndex) => handleSwipe("right", cardIndex)}
+          onSwipedTop={(cardIndex) => handleSwipe("top", cardIndex)}
           cardIndex={0}
           backgroundColor={"#fff"}
           stackSize={3}
         />
+        {!!lastAction && <Text style={styles.actionLabel}>{lastAction}</Text>}
         <Animated.View
           style={[
             styles.iconContainer,
@@ -98,6 +74,7 @@ const KpopScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    minHeight: 0,
     backgroundColor: "#fff",
   },
   caption: {
@@ -108,14 +85,17 @@ const styles = StyleSheet.create({
   },
   swiperContainer: {
     flex: 1,
+    minHeight: 0,
+    width: "100%",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
-    marginLeft: 19,
   },
   card: {
-    width: screenWidth * 0.8,
-    height: screenHeight * 0.6,
+    width: "92%",
+    maxWidth: 420,
+    height: 520,
+    maxHeight: "72%",
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -131,6 +111,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "100%",
     borderRadius: 10,
+    resizeMode: "contain",
   },
   iconContainer: {
     position: "absolute",

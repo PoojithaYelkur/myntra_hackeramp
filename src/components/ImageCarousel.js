@@ -42,9 +42,9 @@ const styles = StyleSheet.create({
   container: {
     width: '92%',
     maxWidth: 960,
-    aspectRatio: 2.2,
-    minHeight: 160,
-    maxHeight: 360,
+    aspectRatio: 3.1,
+    minHeight: 135,
+    maxHeight: 285,
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'center',
