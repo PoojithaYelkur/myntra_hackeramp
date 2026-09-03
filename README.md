@@ -18,12 +18,6 @@ We aimed to:
 Follow these steps to set up and run the project locally :
 
 1.  Clone the repository:
-```bash
-git clone https://github.com/sanjanaynvsdl/MyntraHackathon.git
-```
-```bash
-cd MyntraHackathon
-```
 2. Install dependencies
  ```bash
 npm install
