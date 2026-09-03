@@ -1,12 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet, ScrollView, SafeAreaView, Dimensions } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, SafeAreaView } from 'react-native';
 import NavBar from '../components/NavBar';
 import SearchBar from '../components/SearchBar';
 import ImageCarousel from '../components/ImageCarousel';
 import CategoryGrid from '../components/CategoryGrid';
 import Footer from '../components/Footer';
-
-const { width } = Dimensions.get('window');
 
 const ThemeSelectionScreen = () => {
   return (
@@ -38,14 +36,15 @@ const styles = StyleSheet.create({
     paddingBottom: 20, // Add some padding at the bottom
   },
   caption: {
-    fontSize: width * 0.045, // Responsive font size
+    fontSize: 24,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginVertical: width * 0.025, // Responsive vertical margin
+    marginVertical: 18,
     backgroundColor: 'rgba(255, 192, 203, 0.3)',
-    padding: width * 0.0125, // Responsive padding
-    borderRadius: width * 0.0125, // Responsive border radius
+    padding: 10,
+    borderRadius: 8,
     width: '90%', // Take up most of the width
+    maxWidth: 900,
     alignSelf: 'center', // Center the caption
   },
 });

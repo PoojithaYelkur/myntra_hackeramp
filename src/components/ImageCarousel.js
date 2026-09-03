@@ -40,17 +40,25 @@ const ImageCarousel = () => {
 
 const styles = StyleSheet.create({
   container: {
-    width: '80%',
-    height: 200, // Adjust height as needed
+    width: '92%',
+    maxWidth: 960,
+    aspectRatio: 2.2,
+    minHeight: 160,
+    maxHeight: 360,
     justifyContent: 'center',
     alignItems: 'center',
-    marginHorizontal: '10%', // Add space on left and right
+    alignSelf: 'center',
+    marginBottom: 8,
   },
   image: {
     width: '100%',
     height: '100%',
     borderRadius: 10,
-    boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)', // Add box-shadow
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 3 },
+    shadowOpacity: 0.16,
+    shadowRadius: 6,
+    elevation: 3,
   },
   dotsContainer: {
     flexDirection: 'row',

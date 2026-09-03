@@ -72,15 +72,16 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     padding: 10,
     margin: 10,
-    marginTop: 15, // Added top margin
-    width: '90%', // Reduced width
-    alignSelf: 'center', // Center align the search bar
+    marginTop: 15,
+    width: '92%',
+    maxWidth: 900,
+    alignSelf: 'center',
     // Adding box-shadow
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
-    elevation: 5, // For Android
+    elevation: 5,
   },
   input: {
     flex: 1,

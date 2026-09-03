@@ -3,8 +3,6 @@ import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity, Image, Dimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-const { width: screenWidth } = Dimensions.get('window');
-
 const categories = [
   {
     name: "Bollywood",
@@ -66,23 +64,24 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-around",
-    paddingVertical: screenWidth * 0.05,
-    paddingHorizontal: screenWidth * 0.02,
+    paddingVertical: 12,
+    paddingHorizontal: 12,
+    alignSelf: 'center',
+    width: '100%',
+    maxWidth: 1100,
   },
   categoryItem: {
-    width: screenWidth * 0.28, // Approximately 30% of screen width
-    aspectRatio: 0.7,
-    justifyContent: "center",
+    width: '30%',
+    maxWidth: 220,
+    minWidth: 100,
     alignItems: "center",
     backgroundColor: "#FFF",
-    marginBottom: screenWidth * 0.05,
+    marginBottom: 18,
     
     borderWidth: 1,
     borderColor: "#ccc",
-    paddingTop: screenWidth * 0.03,
-    paddingBottom:screenWidth * 0.02,
-    padding: screenWidth * 0.02,
-    borderRadius: screenWidth * 0.015,
+    padding: 8,
+    borderRadius: 8,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
@@ -91,13 +90,13 @@ const styles = StyleSheet.create({
   },
   categoryImage: {
     width: "100%",
-    height: "96%",
-    borderRadius: screenWidth * 0.01,
+    aspectRatio: 0.72,
+    borderRadius: 5,
   },
   categoryText: {
-    fontSize: screenWidth * 0.03,
+    fontSize: 14,
     fontWeight: "bold",
-    marginTop: screenWidth * 0.01,
+    marginTop: 8,
     textAlign: "center",
   },
 });
